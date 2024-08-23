@@ -61,3 +61,23 @@ body {
 #dark-toggle:checked ~ label div.toggle-circle {
     @apply translate-x-3;
 }
+
+#typewriter {
+    color: #38bdf8;
+    font-weight: bold;
+
+}
+
+#cursor {
+    color: #38bdf8;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 0%;
+    }
+}
