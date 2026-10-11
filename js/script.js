@@ -52,3 +52,48 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
   } else {
     darkToggle.checked = false;
   }
+
+// Portfolio: show more projects and open project details
+const projectCards = document.querySelectorAll('.project-card');
+const showAllProjects = document.querySelector('#show-all-projects');
+const showAllArrow = document.querySelector('#show-all-arrow');
+const projectModal = document.querySelector('#project-modal');
+const closeProjectModal = document.querySelector('#close-project-modal');
+
+showAllProjects.addEventListener('click', function() {
+    const isExpanded = showAllProjects.getAttribute('aria-expanded') === 'true';
+
+    projectCards.forEach(function(card, index) {
+        if (index >= 4) {
+            card.classList.toggle('hidden', isExpanded);
+        }
+    });
+
+    showAllProjects.setAttribute('aria-expanded', String(!isExpanded));
+    showAllProjects.querySelector('span').textContent = isExpanded ? 'Lihat semua proyek' : 'Tampilkan lebih sedikit';
+    showAllArrow.classList.toggle('rotate-180', !isExpanded);
+});
+
+projectCards.forEach(function(card) {
+    const imageButton = card.querySelector('.project-image-button');
+
+    imageButton.addEventListener('click', function() {
+        const image = imageButton.querySelector('img');
+
+        projectModal.querySelector('#modal-project-image').src = image.src;
+        projectModal.querySelector('#modal-project-image').alt = image.alt;
+        projectModal.querySelector('#modal-project-title').textContent = card.querySelector('h3').textContent;
+        projectModal.querySelector('#modal-project-description').textContent = card.querySelector('.project-description').textContent;
+        projectModal.showModal();
+    });
+});
+
+closeProjectModal.addEventListener('click', function() {
+    projectModal.close();
+});
+
+projectModal.addEventListener('click', function(event) {
+    if (event.target === projectModal) {
+        projectModal.close();
+    }
+});
